@@ -125,22 +125,6 @@ On Windows use `copy .env.example .env`, then put your Groq key in `.env`. Get a
 Evaluation result: checklist recall **5/5 (100%)** with **0 false alarms**, and the deep look catches the
 hidden fake-payments setting.
 
----
-
-## Deploy on Streamlit Community Cloud
-
-1. Push this repository to GitHub.
-2. Go to https://share.streamlit.io, click **Create app** and choose the repo, branch `main` and main file `app.py`.
-3. **Advanced settings:** choose Python **3.12**, and in **Secrets** add:
-   ```toml
-   GROQ_API_KEY = "your_key"
-   GROQ_MODEL = "openai/gpt-oss-120b"
-   ```
-4. Click **Deploy**.
-
-On Streamlit Cloud the built-in MCP server runs as a Python subprocess, so the whole workflow,
-including the AI deep look, works there. REA stays off because there is no Node.js. Report history is
-stored in SQLite on the app's disk and resets whenever the app restarts.
 
 ## Run with Docker (full version including REA)
 
