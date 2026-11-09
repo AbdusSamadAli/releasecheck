@@ -1,0 +1,10 @@
+{
+  "demo_app.zip": [
+    "secret_key",
+    "debug_on",
+    "test_url",
+    "dev_file",
+    "todo_note"
+  ],
+  "clean_app.zip": []
+}

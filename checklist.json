@@ -1,0 +1,79 @@
+[
+  {
+    "id": "secret_key",
+    "title": "Secret key or password left in the app",
+    "priority": "Must fix",
+    "why": "Anyone who downloads the app can read it and use your account or paid service.",
+    "fix": "Remove it from the build, load it from a server or environment at runtime, and replace (rotate) the key.",
+    "patterns": [
+      "(?i)(api[_-]?key|secret|passw(or)?d|token|auth)[\"']?\\s*[:=]\\s*[\"'][^\"'\\s]{8,}[\"']",
+      "(?i)^\\s*(export\\s+)?[A-Z0-9_]*(PASSWORD|PASSWD|SECRET|TOKEN|API_KEY|APIKEY)[A-Z0-9_]*\\s*=\\s*[^\\s#]{8,}",
+      "\\b(sk|pk|rk)_(live|test)_[A-Za-z0-9]{6,}",
+      "\\bAKIA[0-9A-Z]{16}\\b",
+      "\\bgh[pousr]_[A-Za-z0-9]{20,}",
+      "-----BEGIN [A-Z ]*PRIVATE KEY-----"
+    ]
+  },
+  {
+    "id": "debug_on",
+    "title": "Debug or developer mode left on",
+    "priority": "Should fix",
+    "why": "Debug mode can show developer tools, extra logs and slower code to real users.",
+    "fix": "Turn debug options off in the production build settings.",
+    "patterns": [
+      "(?i)\\b(debug|devtools|dev_mode|developer_mode)[\"']?\\s*[:=]\\s*(true|1|\"true\"|'true')",
+      "android:debuggable=\"true\"",
+      "openDevTools\\s*\\("
+    ]
+  },
+  {
+    "id": "test_url",
+    "title": "Test or local address left in",
+    "priority": "Should fix",
+    "why": "The app may try to reach your own computer or a test server, so features break for users.",
+    "fix": "Point the production build at the real server address.",
+    "patterns": [
+      "https?://(localhost|127\\.0\\.0\\.1|0\\.0\\.0\\.0|10\\.\\d+\\.\\d+\\.\\d+|192\\.168\\.\\d+\\.\\d+)(:\\d+)?[^\\s\"'<>)]*",
+      "(?i)https?://[^\\s\"'<>)]*(staging|sandbox|\\.test\\b|\\.local\\b)[^\\s\"'<>)]*"
+    ]
+  },
+  {
+    "id": "dev_file",
+    "title": "Developer-only file shipped",
+    "priority": "Should fix",
+    "why": "These files are only needed while building and can reveal settings or the original source code.",
+    "fix": "Exclude them in your build or packaging configuration.",
+    "files": [
+      ".env",
+      ".env.*",
+      "*.map",
+      "*.log",
+      "*.bak",
+      "*.orig",
+      "*~",
+      ".DS_Store",
+      "Thumbs.db",
+      ".git/*",
+      "*.pem",
+      "id_rsa"
+    ]
+  },
+  {
+    "id": "big_file",
+    "title": "Very large file",
+    "priority": "Nice to fix",
+    "why": "Large files make the download slower and may have been added by mistake.",
+    "fix": "Check it is really needed, compress it, or load it on demand.",
+    "max_mb": 5
+  },
+  {
+    "id": "todo_note",
+    "title": "Unfinished work note",
+    "priority": "Nice to fix",
+    "why": "TODO and FIXME notes often point to features that are not finished.",
+    "fix": "Review each note and finish or remove it before release.",
+    "patterns": [
+      "\\b(TODO|FIXME|HACK|XXX)\\b"
+    ]
+  }
+]

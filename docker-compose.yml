@@ -1,0 +1,12 @@
+services:
+  releasecheck:
+    build: .
+    ports:
+      - "8501:8501"
+    env_file: .env
+    volumes:
+      - releasecheck-data:/app/data
+    mem_limit: 1g
+    restart: unless-stopped
+volumes:
+  releasecheck-data:
